@@ -313,7 +313,7 @@ def _generate_controls():
                 st.session_state.result = {
                     "snapshot": schema.to_dict(),
                     "df": df,
-                    "csv": to_csv_bytes(df),
+                    "csv": to_csv_bytes(df, schema),
                     "xlsx": to_excel_bytes(df, schema),
                     "checklist": to_csv_bytes(tableau_checklist(schema)),
                 }

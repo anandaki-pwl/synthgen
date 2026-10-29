@@ -10,7 +10,14 @@ from openpyxl.utils import get_column_letter
 from .fields import Schema
 
 
-def to_csv_bytes(df: pd.DataFrame) -> bytes:
+def to_csv_bytes(df: pd.DataFrame, schema: Schema | None = None) -> bytes:
+    # Date fields must be written without a time, or Tableau reads them as Date & Time
+    # and the type won't match the real source at swap time.
+    if schema is not None:
+        df = df.copy()
+        for f in schema.fields:
+            if f.kind == "date" and f.name in df:
+                df[f.name] = df[f.name].dt.strftime("%Y-%m-%d")
     # utf-8-sig so Excel opens accented characters correctly
     return df.to_csv(index=False, date_format="%Y-%m-%d %H:%M:%S").encode("utf-8-sig")
 

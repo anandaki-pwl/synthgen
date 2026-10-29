@@ -84,8 +84,10 @@ def test_parse_field_list():
 def test_exports_round_trip():
     s = every_kind_schema(50)
     df = generate(s)
-    csv = pd.read_csv(io.BytesIO(to_csv_bytes(df)))
+    csv = pd.read_csv(io.BytesIO(to_csv_bytes(df, s)), dtype=str)
     assert list(csv.columns) == list(df.columns) and len(csv) == 50
+    assert csv["Admit Date"].str.fullmatch(r"\d{4}-\d{2}-\d{2}").all()  # no time on date fields
+    assert csv["Last Login"].str.fullmatch(r"\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}").all()
     xl = pd.read_excel(io.BytesIO(to_excel_bytes(df, s)))
     assert list(xl.columns) == list(df.columns) and len(xl) == 50
     assert pd.api.types.is_datetime64_any_dtype(xl["Admit Date"])
