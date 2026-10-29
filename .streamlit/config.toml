@@ -1,0 +1,10 @@
+[browser]
+gatherUsageStats = false
+
+[client]
+# Hide developer menu items like "Deploy"
+toolbarMode = "minimal"
+
+[server]
+# Only reachable from this computer
+address = "localhost"

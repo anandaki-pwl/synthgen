@@ -1,0 +1,20 @@
+# Python environment created by launch.bat
+.venv/
+
+# Python caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Generated data (never commit datasets)
+*.csv
+*.xlsx
+
+# Local Claude Code settings
+.claude/settings.local.json
+
+# Editor / OS clutter
+.vscode/
+.idea/
+Thumbs.db
+.DS_Store
